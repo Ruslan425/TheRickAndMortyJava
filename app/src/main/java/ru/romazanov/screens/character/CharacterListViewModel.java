@@ -6,6 +6,7 @@ public class CharacterListViewModel extends ViewModel {
 
 
     public String getName() {
-        return "Тест";
+        return "Тест Персонажи";
     }
+
 }

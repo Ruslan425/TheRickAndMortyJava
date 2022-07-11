@@ -1,6 +1,7 @@
 package ru.romazanov.screens.character;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import javax.inject.Inject;
 
 
+import ru.romazanov.App;
+import ru.romazanov.screens.ViewModelFactory;
 import ru.romazanov.therickandmortyjava.databinding.FragmentCharacterListBinding;
 
 public class CharacterListFragment extends Fragment {
@@ -23,8 +26,7 @@ public class CharacterListFragment extends Fragment {
     private CharacterListViewModel mViewModel;
 
     @Inject
-    ViewModelProvider.Factory viewModelFactory; // Приходит null
-
+    ViewModelFactory viewModelFactory;
 
     public static CharacterListFragment newInstance() {
         return new CharacterListFragment();
@@ -33,6 +35,7 @@ public class CharacterListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         binding = FragmentCharacterListBinding.inflate(inflater, container, false);
 
         mViewModel = new ViewModelProvider(this, viewModelFactory).get(CharacterListViewModel.class);
@@ -40,8 +43,11 @@ public class CharacterListFragment extends Fragment {
         binding.text.setText(mViewModel.getName());
 
         return binding.getRoot();
-
     }
 
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        ((App)getActivity().getApplication()).appComponent.injectCharacterListFragment(this);
+    }
 }

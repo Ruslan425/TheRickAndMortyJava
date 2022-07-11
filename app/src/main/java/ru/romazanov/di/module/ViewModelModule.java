@@ -1,35 +1,60 @@
 package ru.romazanov.di.module;
 
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.Map;
+
+import javax.inject.Provider;
 
 import dagger.Binds;
+import dagger.MapKey;
 import dagger.Module;
+import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import ru.romazanov.screens.ViewModelFactory;
-import ru.romazanov.screens.ViewModelKey;
 import ru.romazanov.screens.character.CharacterListViewModel;
 import ru.romazanov.screens.episode.EpisodeListViewModel;
 import ru.romazanov.screens.location.LocationListViewModel;
 
 @Module
-abstract class ViewModelModule {
+public class ViewModelModule {
 
-    @Binds
+    @Target({ElementType.METHOD})
+    @Retention(RetentionPolicy.RUNTIME)
+    @MapKey
+    @interface ViewModelKey {
+        Class<? extends ViewModel> value();
+    }
+
+    @Provides
+    public ViewModelFactory provideViewModelFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> providerMap) {
+        return new ViewModelFactory(providerMap);
+    }
+
+    @Provides
     @IntoMap
     @ViewModelKey(CharacterListViewModel.class)
-    abstract ViewModel provideCharacterListViewModel(CharacterListViewModel characterListViewModel);
+    public ViewModel provideCharacterListViewModel() {
+        return new CharacterListViewModel();
+    }
 
-    @Binds
+    @Provides
     @IntoMap
     @ViewModelKey(EpisodeListViewModel.class)
-    abstract ViewModel provideEpisodeListViewModel(EpisodeListViewModel episodeListViewModel);
+    public ViewModel provideEpisodeListViewModel() {
+        return new EpisodeListViewModel();
+    }
 
-    @Binds
+    @Provides
     @IntoMap
     @ViewModelKey(LocationListViewModel.class)
-    abstract ViewModel provideLocationListViewModel(LocationListViewModel locationListViewModel);
+    public ViewModel provideLocationListViewModel() {
+        return new LocationListViewModel();
+    }
 
-    @Binds
-    abstract ViewModelProvider.Factory provideViewModelFactory(ViewModelFactory factory);
 }
