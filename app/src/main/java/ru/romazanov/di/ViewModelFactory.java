@@ -1,4 +1,4 @@
-package ru.romazanov.screens;
+package ru.romazanov.di;
 
 
 import androidx.lifecycle.ViewModel;

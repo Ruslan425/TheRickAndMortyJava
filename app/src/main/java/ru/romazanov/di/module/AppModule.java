@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = ViewModelModule.class)
+@Module
 public class AppModule {
 
     private final Application application;
