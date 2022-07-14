@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.romazanov.data.retrofit.RetrofitApiInterface;
 
 @Module
-public class RetrofitModule {
+public class NetworkModule {
 
     private String baseUrl = "https://rickandmortyapi.com/api/";
 

@@ -41,7 +41,7 @@ public class EpisodeListFragment extends Fragment {
     private FragmentEpisodeListBinding binding;
     private LiveData<ArrayList<Episode>> dataList;
 
-    private Map<String, String> map = new HashMap<>();
+    private Map<String, String> map;
 
     public static EpisodeListFragment newInstance() {
         return new EpisodeListFragment();
@@ -51,6 +51,7 @@ public class EpisodeListFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ((App) getActivity().getApplication()).appComponent.injectEpisodeListFragment(this);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(EpisodeListViewModel.class);
     }
 
 
@@ -58,11 +59,12 @@ public class EpisodeListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentEpisodeListBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(EpisodeListViewModel.class);
+
         dataList = viewModel.getDataList();
+        map = viewModel.map;
 
         initRecyclerView();
-        viewModel.makeCall(map);
+
         getData();
 
 

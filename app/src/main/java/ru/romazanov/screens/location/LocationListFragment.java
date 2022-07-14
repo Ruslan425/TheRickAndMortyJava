@@ -38,7 +38,7 @@ public class LocationListFragment extends Fragment {
     private FragmentLocationListBinding binding;
     private LiveData<ArrayList<Location>> dataList;
 
-    private Map<String, String> map = new HashMap<>();
+    private Map<String, String> map;
 
 
     public static LocationListFragment newInstance() {
@@ -49,17 +49,18 @@ public class LocationListFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ((App)getActivity().getApplication()).appComponent.injectLocationListFragment(this);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(LocationListViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentLocationListBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(LocationListViewModel.class);
+
         dataList = viewModel.getDataList();
+        map = viewModel.map;
 
         initRecyclerView();
-        viewModel.makeCall(map);
         getData();
 
         return binding.getRoot();

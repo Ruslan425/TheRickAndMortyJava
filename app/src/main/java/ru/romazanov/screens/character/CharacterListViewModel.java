@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -19,13 +21,22 @@ import ru.romazanov.data.retrofit.RetrofitApiInterface;
 
 public class CharacterListViewModel extends ViewModel {
 
+
+
+
     @Inject
     public CharacterListViewModel(
             RetrofitApiInterface api
     ) {
         this.api = api;
+        makeCall(this.map);
     }
 
+
+
+
+
+    Map<String, String> map = new HashMap<>();
     private RetrofitApiInterface api;
     private CharacterAnswer answer;
 
@@ -56,6 +67,9 @@ public class CharacterListViewModel extends ViewModel {
 
             }
         });
+    }
+
+    {
     }
 
 }

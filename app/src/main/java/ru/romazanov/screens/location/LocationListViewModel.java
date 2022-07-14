@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -21,8 +22,10 @@ public class LocationListViewModel extends ViewModel {
     @Inject
     public LocationListViewModel(RetrofitApiInterface api) {
         this.api = api;
+        makeCall(map);
     }
 
+    Map<String, String> map = new HashMap<>();
     private RetrofitApiInterface api;
     private LocationAnswer answer;
 

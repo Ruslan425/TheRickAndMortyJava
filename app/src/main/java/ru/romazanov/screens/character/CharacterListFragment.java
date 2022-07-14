@@ -39,8 +39,7 @@ public class CharacterListFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private LiveData<ArrayList<Character>> dataList;
     private CharacterListViewModel viewModel;
-
-    private Map<String, String> map = new HashMap<>();
+    private Map<String, String> map;
 
     public static CharacterListFragment newInstance() {
         return new CharacterListFragment();
@@ -50,7 +49,6 @@ public class CharacterListFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         ((App) getActivity().getApplication()).appComponent.injectCharacterListFragment(this);
-
     }
 
     @Override
@@ -60,9 +58,9 @@ public class CharacterListFragment extends Fragment {
         binding = FragmentCharacterListBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(CharacterListViewModel.class);
         dataList = viewModel.getDataList();
+        map = viewModel.map;
 
         initRecyclerView();
-        viewModel.makeCall(map);
         getData();
 
         return binding.getRoot();
