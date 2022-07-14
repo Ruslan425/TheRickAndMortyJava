@@ -3,4 +3,10 @@
     <string name="character">Персонажи</string>
     <string name="location">Локаций</string>
     <string name="episode">Эпизоды</string>
+    <string name="species">Species :</string>
+    <string name="name">Name :</string>
+    <string name="id">Id :</string>
+    <string name="image">image</string>
+    <string name="dimension">Dimension :</string>
+    <string name="episode_field">Episode :</string>
 </resources>
