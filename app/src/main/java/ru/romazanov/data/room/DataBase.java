@@ -14,8 +14,7 @@ import ru.romazanov.data.room.entities.LocationEntity;
         CharacterEntity.class,
         EpisodeEntity.class,
         LocationEntity.class
-
-}, version = 3)
+}, version = 4)
 public abstract class DataBase extends RoomDatabase {
 
     public abstract CharacterDao getCharacterDao();

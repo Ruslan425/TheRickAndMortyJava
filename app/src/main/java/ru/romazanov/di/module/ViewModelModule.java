@@ -18,6 +18,8 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import ru.romazanov.data.iteractors.CharacterInteractor;
+import ru.romazanov.data.iteractors.EpisodeInteractor;
+import ru.romazanov.data.iteractors.LocationInteractor;
 import ru.romazanov.data.retrofit.RetrofitApiInterface;
 import ru.romazanov.di.ViewModelFactory;
 import ru.romazanov.screens.character.CharacterListViewModel;
@@ -51,15 +53,15 @@ public class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(EpisodeListViewModel.class)
-    public ViewModel provideEpisodeListViewModel(RetrofitApiInterface api) {
-        return new EpisodeListViewModel(api);
+    public ViewModel provideEpisodeListViewModel(EpisodeInteractor interactor) {
+        return new EpisodeListViewModel(interactor);
     }
 
     @Provides
     @IntoMap
     @ViewModelKey(LocationListViewModel.class)
-    public ViewModel provideLocationListViewModel(RetrofitApiInterface api) {
-        return new LocationListViewModel(api);
+    public ViewModel provideLocationListViewModel(LocationInteractor interactor) {
+        return new LocationListViewModel(interactor);
     }
 
 }

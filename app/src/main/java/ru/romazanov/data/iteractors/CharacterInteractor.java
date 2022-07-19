@@ -1,7 +1,6 @@
 package ru.romazanov.data.iteractors;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -55,7 +54,6 @@ public class CharacterInteractor {
                 makeNetworkCall(new HashMap<>());
             } else {
                 makeLocalCall();
-                Log.e("TEST", String.valueOf(repository.characterDao.getAll().size()));
             }
             return null;
         }

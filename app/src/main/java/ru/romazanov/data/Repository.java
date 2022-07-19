@@ -28,8 +28,8 @@ import ru.romazanov.data.room.entities.LocationEntity;
 public class Repository {
 
     public CharacterDao characterDao;
-    EpisodeDao episodeDao;
-    LocationDao locationDao;
+    public EpisodeDao episodeDao;
+    public LocationDao locationDao;
 
     public RetrofitApiInterface retrofit;
 
@@ -49,11 +49,11 @@ public class Repository {
         return characterDao.getAll();
     }
 
-    public LiveData<List<EpisodeEntity>> getEpisodeEntityList() {
+    public List<EpisodeEntity> getEpisodeEntityList() {
         return episodeDao.getAll();
     }
 
-    public LiveData<List<LocationEntity>> getLocationEntityList() {
+    public List<LocationEntity> getLocationEntityList() {
         return locationDao.getAll();
     }
 

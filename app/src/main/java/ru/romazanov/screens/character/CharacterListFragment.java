@@ -18,11 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
-
 
 import ru.romazanov.App;
 import ru.romazanov.data.model.character.Character;
