@@ -48,7 +48,7 @@ public class LocationListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((App)getActivity().getApplication()).appComponent.injectLocationListFragment(this);
+       ((App)getActivity().getApplication()).getAppComponent().injectLocationListFragment(this);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(LocationListViewModel.class);
     }
 

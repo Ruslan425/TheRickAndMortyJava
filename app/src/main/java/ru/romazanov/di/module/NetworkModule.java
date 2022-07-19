@@ -31,5 +31,4 @@ public class NetworkModule {
         return retrofit;
     }
 
-
 }

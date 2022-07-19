@@ -10,5 +10,5 @@ public class Location {
     public String dimension;
     public ArrayList<String> residents;
     public String url;
-    public Date created;
+    public String created;
 }

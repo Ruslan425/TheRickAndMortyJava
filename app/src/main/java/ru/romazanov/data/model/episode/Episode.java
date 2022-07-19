@@ -10,5 +10,5 @@ public class Episode {
     public String episode;
     public ArrayList<String> characters;
     public String url;
-    public Date created;
+    public String created;
 }

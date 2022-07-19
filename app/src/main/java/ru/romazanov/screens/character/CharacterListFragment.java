@@ -36,10 +36,8 @@ public class CharacterListFragment extends Fragment {
 
     private FragmentCharacterListBinding binding;
     private CharacterAdapter adapter;
-    private LinearLayoutManager layoutManager;
     private LiveData<ArrayList<Character>> dataList;
     private CharacterListViewModel viewModel;
-    private Map<String, String> map;
 
     public static CharacterListFragment newInstance() {
         return new CharacterListFragment();
@@ -48,7 +46,7 @@ public class CharacterListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((App) getActivity().getApplication()).appComponent.injectCharacterListFragment(this);
+        ((App) getActivity().getApplication()).getAppComponent().injectCharacterListFragment(this);
     }
 
     @Override
@@ -58,7 +56,6 @@ public class CharacterListFragment extends Fragment {
         binding = FragmentCharacterListBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(CharacterListViewModel.class);
         dataList = viewModel.getDataList();
-        map = viewModel.map;
 
         initRecyclerView();
         getData();
@@ -69,26 +66,19 @@ public class CharacterListFragment extends Fragment {
     private void initRecyclerView() {
 
         RecyclerView recyclerView = binding.recyclerView;
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CharacterAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(
                 new RecyclerView.OnScrollListener() {
                     @Override
-                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                         super.onScrollStateChanged(recyclerView, newState);
                         if (!recyclerView.canScrollVertically(1)) {
-                            if (viewModel.getAnswer().info.next != null) {
-                                String page = "";
-                                page = viewModel.getAnswer().info.next.split("=")[1];
-                                map.clear();
-                                map.put("page", page);
-                                viewModel.makeCall(map);
-                            }
+                            viewModel.nextPage();
                         }
                     }
-
                 });
     }
 

@@ -1,5 +1,8 @@
 package ru.romazanov.di.module;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModel;
 
 import java.lang.annotation.ElementType;
@@ -14,6 +17,7 @@ import dagger.MapKey;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
+import ru.romazanov.data.iteractors.CharacterInteractor;
 import ru.romazanov.data.retrofit.RetrofitApiInterface;
 import ru.romazanov.di.ViewModelFactory;
 import ru.romazanov.screens.character.CharacterListViewModel;
@@ -36,11 +40,12 @@ public class ViewModelModule {
         return new ViewModelFactory(providerMap);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Provides
     @IntoMap
     @ViewModelKey(CharacterListViewModel.class)
-    public ViewModel provideCharacterListViewModel(RetrofitApiInterface api) {
-        return new CharacterListViewModel(api);
+    public ViewModel provideCharacterListViewModel(CharacterInteractor interactor) {
+        return new CharacterListViewModel(interactor);
     }
 
     @Provides

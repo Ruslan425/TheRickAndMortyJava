@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        ((App)getApplication()).appComponent.inject(this);
+        ((App)getApplication()).getAppComponent().inject(this);
 
         setContentView(binding.getRoot());
 

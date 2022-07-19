@@ -50,7 +50,7 @@ public class EpisodeListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((App) getActivity().getApplication()).appComponent.injectEpisodeListFragment(this);
+       ((App) getActivity().getApplication()).getAppComponent().injectEpisodeListFragment(this);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(EpisodeListViewModel.class);
     }
 
