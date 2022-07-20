@@ -16,6 +16,7 @@ import ru.romazanov.data.room.DataBase;
 import ru.romazanov.data.room.dao.CharacterDao;
 import ru.romazanov.data.room.dao.EpisodeDao;
 import ru.romazanov.data.room.dao.LocationDao;
+import ru.romazanov.data.room.dao.MyInterceptorDao;
 
 @Module
 public class RoomModule {
@@ -51,6 +52,12 @@ public class RoomModule {
     @Singleton
     public LocationDao getLocationDao(DataBase db) {
         return db.getLocationDao();
+    }
+
+    @Provides
+    @Singleton
+    public MyInterceptorDao getMyInterceptorDao(DataBase db) {
+        return db.getMyInterceptorDao();
     }
 
 }
