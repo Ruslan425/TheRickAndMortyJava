@@ -1,6 +1,7 @@
 package ru.romazanov.data.room.dao;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -16,6 +17,6 @@ public interface MyInterceptorDao {
     void addLogg(MyInterceptorEntity myInterceptorEntity);
 
     @Query("SELECT * FROM my_interceptor")
-    List<MyInterceptorEntity> getAll();
+    LiveData<List<MyInterceptorEntity>> getAll();
 
 }

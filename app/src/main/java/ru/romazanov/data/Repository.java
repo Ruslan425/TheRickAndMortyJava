@@ -21,15 +21,18 @@ import ru.romazanov.data.room.DataBase;
 import ru.romazanov.data.room.dao.CharacterDao;
 import ru.romazanov.data.room.dao.EpisodeDao;
 import ru.romazanov.data.room.dao.LocationDao;
+import ru.romazanov.data.room.dao.MyInterceptorDao;
 import ru.romazanov.data.room.entities.CharacterEntity;
 import ru.romazanov.data.room.entities.EpisodeEntity;
 import ru.romazanov.data.room.entities.LocationEntity;
+import ru.romazanov.data.room.entities.MyInterceptorEntity;
 
 public class Repository {
 
     public CharacterDao characterDao;
     public EpisodeDao episodeDao;
     public LocationDao locationDao;
+    public MyInterceptorDao myInterceptorDao;
 
     public RetrofitApiInterface retrofit;
 
@@ -43,6 +46,7 @@ public class Repository {
         this.episodeDao = db.getEpisodeDao();
         this.locationDao = db.getLocationDao();
         this.retrofit = retrofit;
+        this.myInterceptorDao = db.getMyInterceptorDao();
     }
 
     public List<CharacterEntity> getCharacterEntityList() {
@@ -55,6 +59,10 @@ public class Repository {
 
     public List<LocationEntity> getLocationEntityList() {
         return locationDao.getAll();
+    }
+
+    public LiveData<List<MyInterceptorEntity>> getMyInterceptorEntityList() {
+        return myInterceptorDao.getAll();
     }
 
 }

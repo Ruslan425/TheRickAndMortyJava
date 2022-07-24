@@ -17,6 +17,7 @@ import dagger.MapKey;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
+import ru.romazanov.data.Repository;
 import ru.romazanov.data.iteractors.CharacterInteractor;
 import ru.romazanov.data.iteractors.EpisodeInteractor;
 import ru.romazanov.data.iteractors.LocationInteractor;
@@ -25,6 +26,7 @@ import ru.romazanov.di.ViewModelFactory;
 import ru.romazanov.screens.character.CharacterListViewModel;
 import ru.romazanov.screens.episode.EpisodeListViewModel;
 import ru.romazanov.screens.location.LocationListViewModel;
+import ru.romazanov.therickandmortyjava.MainActivityViewModel;
 
 
 @Module
@@ -42,7 +44,6 @@ public class ViewModelModule {
         return new ViewModelFactory(providerMap);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Provides
     @IntoMap
     @ViewModelKey(CharacterListViewModel.class)
@@ -62,6 +63,14 @@ public class ViewModelModule {
     @ViewModelKey(LocationListViewModel.class)
     public ViewModel provideLocationListViewModel(LocationInteractor interactor) {
         return new LocationListViewModel(interactor);
+    }
+
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(MainActivityViewModel.class)
+    public ViewModel provideMainActivityViewModel(Repository repository) {
+        return new MainActivityViewModel(repository);
     }
 
 }

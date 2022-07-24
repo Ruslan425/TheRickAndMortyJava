@@ -13,6 +13,7 @@ import ru.romazanov.data.iteractors.EpisodeInteractor;
 import ru.romazanov.data.iteractors.LocationInteractor;
 import ru.romazanov.data.retrofit.RetrofitApiInterface;
 import ru.romazanov.data.room.DataBase;
+import ru.romazanov.data.room.utils.EntityConverter;
 
 @Module
 public class AppModule {
@@ -39,20 +40,29 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public CharacterInteractor provideCharacterInteractor(Repository repository){
-        return new CharacterInteractor(repository);
+    public CharacterInteractor provideCharacterInteractor(Repository repository, EntityConverter converter){
+        return new CharacterInteractor(repository, converter);
     }
 
     @Provides
     @Singleton
-    public EpisodeInteractor provideEpisodeInteractor(Repository repository){
-        return new EpisodeInteractor(repository);
+    public EpisodeInteractor provideEpisodeInteractor(Repository repository, EntityConverter converter){
+        return new EpisodeInteractor(repository, converter);
     }
 
     @Provides
     @Singleton
-    public LocationInteractor provideLocationInteractor(Repository repository){
-        return new LocationInteractor(repository);
+    public LocationInteractor provideLocationInteractor(
+            Repository repository,
+            EntityConverter converter
+    ){
+        return new LocationInteractor(repository, converter);
+    }
+
+    @Provides
+    @Singleton
+    public EntityConverter provideConverter(){
+        return new EntityConverter();
     }
 
 }

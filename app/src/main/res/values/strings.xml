@@ -9,4 +9,7 @@
     <string name="image">image</string>
     <string name="dimension">Dimension :</string>
     <string name="episode_field">Episode :</string>
+    <string name="log">LOG</string>
+    <string name="response">Response</string>
+    <string name="request">Request</string>
 </resources>

@@ -20,6 +20,7 @@ import ru.romazanov.data.Repository;
 import ru.romazanov.data.model.episode.Episode;
 import ru.romazanov.data.model.episode.EpisodeAnswer;
 import ru.romazanov.data.room.entities.EpisodeEntity;
+import ru.romazanov.data.room.utils.EntityConverter;
 
 public class EpisodeInteractor {
 
@@ -41,11 +42,17 @@ public class EpisodeInteractor {
         return episodes;
     }
 
+    private EntityConverter converter;
+
+
+
     @Inject
     public EpisodeInteractor(
-            Repository repository
+            Repository repository,
+            EntityConverter converter
     ) {
         this.repository = repository;
+        this.converter = converter;
         initTask();
     }
 
@@ -90,43 +97,13 @@ public class EpisodeInteractor {
         ArrayList<Episode> newList = new ArrayList<>(Objects.requireNonNull(episodes.getValue()));
         newList.addAll(episodeAnswer.episodes);
         episodes.postValue(newList);
-        episodeEntities.addAll(getEntityFromEpisode(episodeAnswer.episodes));
+        episodeEntities.addAll(converter.getEntityFromEpisode(episodeAnswer.episodes));
         repository.episodeDao.addEpisodeList(episodeEntities);
     }
 
     void makeLocalCall() {
-        episodes.postValue(getEpisodeFromEntity(repository.getEpisodeEntityList()));
+        episodes.postValue(converter.getEpisodeFromEntity(repository.getEpisodeEntityList()));
     }
 
-    private ArrayList<Episode> getEpisodeFromEntity(List<EpisodeEntity> list) {
-        ArrayList<Episode> list1 = new ArrayList<>();
-        for (EpisodeEntity episodeEntity : list) {
-            list1.add(new Episode(
-                    episodeEntity.id,
-                    episodeEntity.name,
-                    episodeEntity.air_date,
-                    episodeEntity.episode,
-                    episodeEntity.characters,
-                    episodeEntity.url,
-                    episodeEntity.created
-            ));
-        }
-        return list1;
-    }
 
-    private ArrayList<EpisodeEntity> getEntityFromEpisode(ArrayList<Episode> list) {
-        ArrayList<EpisodeEntity> list1 = new ArrayList<>();
-        for (Episode episode : list) {
-            list1.add(new EpisodeEntity(
-                    episode.id,
-                    episode.name,
-                    episode.air_date,
-                    episode.episode,
-                    episode.characters,
-                    episode.url,
-                    episode.created
-            ));
-        }
-        return list1;
-    }
 }

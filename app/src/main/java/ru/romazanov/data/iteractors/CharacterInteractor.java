@@ -20,6 +20,7 @@ import ru.romazanov.data.Repository;
 import ru.romazanov.data.model.character.Character;
 import ru.romazanov.data.model.character.CharacterAnswer;
 import ru.romazanov.data.room.entities.CharacterEntity;
+import ru.romazanov.data.room.utils.EntityConverter;
 
 public class CharacterInteractor {
 
@@ -35,11 +36,15 @@ public class CharacterInteractor {
         return characters;
     }
 
+    private final EntityConverter converter;
+
     @Inject
     public CharacterInteractor(
-            Repository repository
+            Repository repository,
+            EntityConverter converter
     ) {
         this.repository = repository;
+        this.converter = converter;
         initTask();
     }
 
@@ -84,51 +89,13 @@ public class CharacterInteractor {
         ArrayList<Character> newList = new ArrayList<>(Objects.requireNonNull(characters.getValue()));
         newList.addAll(characterAnswer.characters);
         characters.postValue(newList);
-        characterEntities.addAll(getEntityFromCharacter(characterAnswer.characters));
+        characterEntities.addAll(converter.getEntityFromCharacter(characterAnswer.characters));
         repository.characterDao.addCharacterList(characterEntities);
     }
 
     void makeLocalCall() {
-        characters.postValue(getCharacterFromEntity(repository.getCharacterEntityList()));
+        characters.postValue(converter.getCharacterFromEntity(repository.getCharacterEntityList()));
     }
 
-    private ArrayList<Character> getCharacterFromEntity(List<CharacterEntity> list) {
-        ArrayList<Character> list1 = new ArrayList<>();
-        for (CharacterEntity characterEntity : list) {
-            list1.add(new Character(
-                    characterEntity.id,
-                    characterEntity.name,
-                    characterEntity.status,
-                    characterEntity.species,
-                    characterEntity.type,
-                    characterEntity.gender,
-                    characterEntity.origin,
-                    characterEntity.location,
-                    characterEntity.image,
-                    characterEntity.episode,
-                    characterEntity.url,
-                    characterEntity.created));
-        }
-        return list1;
-    }
 
-    private ArrayList<CharacterEntity> getEntityFromCharacter(ArrayList<Character> list) {
-        ArrayList<CharacterEntity> list1 = new ArrayList<>();
-        for (Character character : list) {
-            list1.add(new CharacterEntity(
-                    character.id,
-                    character.name,
-                    character.status,
-                    character.species,
-                    character.type,
-                    character.gender,
-                    character.origin,
-                    character.location,
-                    character.image,
-                    character.episode,
-                    character.url,
-                    character.created));
-        }
-        return list1;
-    }
 }

@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,6 +19,7 @@ import ru.romazanov.data.Repository;
 import ru.romazanov.data.model.location.Location;
 import ru.romazanov.data.model.location.LocationAnswer;
 import ru.romazanov.data.room.entities.LocationEntity;
+import ru.romazanov.data.room.utils.EntityConverter;
 
 public class LocationInteractor {
 
@@ -31,14 +31,19 @@ public class LocationInteractor {
 
     private final MutableLiveData<ArrayList<Location>> locations = new MutableLiveData<>(new ArrayList<>());
 
+    private final EntityConverter converter;
+
+
     public LiveData<ArrayList<Location>> getLocation() {
         return locations;
     }
 
     @Inject
     public LocationInteractor(
-            Repository repository
+            Repository repository,
+            EntityConverter converter
     ) {
+        this.converter = converter;
         this.repository = repository;
         initTask();
     }
@@ -84,43 +89,12 @@ public class LocationInteractor {
         ArrayList<Location> newList = new ArrayList<>(Objects.requireNonNull(locations.getValue()));
         newList.addAll(locationAnswer.locations);
         locations.postValue(newList);
-        locationEntities.addAll(getEntityFromEpisode(locationAnswer.locations));
+        locationEntities.addAll(converter.getEntityFromLocation(locationAnswer.locations));
         repository.locationDao.addLocationList(locationEntities);
     }
 
     void makeLocalCall() {
-        locations.postValue(getEpisodeFromEntity(repository.getLocationEntityList()));
+        locations.postValue(converter.getLocationFromEntity(repository.getLocationEntityList()));
     }
 
-    private ArrayList<Location> getEpisodeFromEntity(List<LocationEntity> list) {
-        ArrayList<Location> list1 = new ArrayList<>();
-        for (LocationEntity locationEntity : list) {
-            list1.add( new Location(
-                    locationEntity.id,
-                    locationEntity.name,
-                    locationEntity.type,
-                    locationEntity.dimension,
-                    locationEntity.residents,
-                    locationEntity.url,
-                    locationEntity.created
-                    ));
-        }
-        return list1;
-    }
-
-    private ArrayList<LocationEntity> getEntityFromEpisode(ArrayList<Location> list) {
-        ArrayList<LocationEntity> list1 = new ArrayList<>();
-        for (Location location : list) {
-            list1.add(new LocationEntity(
-                    location.id,
-                    location.name,
-                    location.type,
-                    location.dimension,
-                    location.residents,
-                    location.url,
-                    location.created
-            ));
-        }
-        return list1;
-    }
 }

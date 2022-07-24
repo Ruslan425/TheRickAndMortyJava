@@ -35,8 +35,8 @@ public class CharacterListViewModel extends ViewModel {
 
 
     void nextPage() {
-        if(826 % dataList.getValue().size() != 0) { // Убрать в константу ?
-            String page = String.valueOf(dataList.getValue().size() / 20 + 1); // Убрать в констатнут ?
+        if(dataList.getValue().size() % 20 == 0) {
+            String page = String.valueOf(dataList.getValue().size() / 20 + 1);
             Map<String, String> map = new HashMap<>();
             map.put("page", page);
             interactor.myAsyncTask(map);
