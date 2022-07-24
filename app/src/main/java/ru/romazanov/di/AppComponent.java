@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.romazanov.di.module.AppModule;
 import ru.romazanov.di.module.NetworkModule;
+import ru.romazanov.di.module.RoomModule;
 import ru.romazanov.di.module.ViewModelModule;
 import ru.romazanov.screens.character.CharacterListFragment;
 import ru.romazanov.screens.episode.EpisodeListFragment;
@@ -16,7 +17,8 @@ import ru.romazanov.therickandmortyjava.MainActivity;
 @Component(modules = {
         AppModule.class,
         NetworkModule.class,
-        ViewModelModule.class
+        ViewModelModule.class,
+        RoomModule.class,
 })
 public interface AppComponent {
 

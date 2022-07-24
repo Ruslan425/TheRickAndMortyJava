@@ -3,6 +3,7 @@ package ru.romazanov.screens.location;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,8 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -32,14 +31,10 @@ public class LocationListFragment extends Fragment {
     @Inject
     ViewModelFactory viewModelFactory;
 
-    private LocationListViewModel viewModel;
-    private LocationAdapter adapter;
-    private LinearLayoutManager layoutManager;
     private FragmentLocationListBinding binding;
+    private LocationAdapter adapter;
     private LiveData<ArrayList<Location>> dataList;
-
-    private Map<String, String> map;
-
+    private LocationListViewModel viewModel;
 
     public static LocationListFragment newInstance() {
         return new LocationListFragment();
@@ -48,17 +43,15 @@ public class LocationListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((App)getActivity().getApplication()).appComponent.injectLocationListFragment(this);
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(LocationListViewModel.class);
+        ((App) getActivity().getApplication()).getAppComponent().injectLocationListFragment(this);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentLocationListBinding.inflate(inflater, container, false);
-
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(LocationListViewModel.class);
         dataList = viewModel.getDataList();
-        map = viewModel.map;
 
         initRecyclerView();
         getData();
@@ -68,7 +61,7 @@ public class LocationListFragment extends Fragment {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = binding.recyclerView;
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new LocationAdapter();
         recyclerView.setAdapter(adapter);
@@ -78,13 +71,7 @@ public class LocationListFragment extends Fragment {
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                         super.onScrollStateChanged(recyclerView, newState);
                         if (!recyclerView.canScrollVertically(1)) {
-                            if (viewModel.getAnswer().info.next != null) {
-                                String page = "";
-                                page = viewModel.getAnswer().info.next.split("=")[1];
-                                map.clear();
-                                map.put("page", page);
-                                viewModel.makeCall(map);
-                            }
+                           viewModel.nextPage();
                         }
                     }
 

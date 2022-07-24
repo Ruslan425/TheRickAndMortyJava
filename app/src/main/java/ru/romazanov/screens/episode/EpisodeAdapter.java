@@ -17,7 +17,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
     private ArrayList<Episode> dataList = new ArrayList<>();
 
     public void setDataList(ArrayList<Episode> list) {
-        dataList.addAll(list);
+        dataList = list;
     }
 
     @NonNull

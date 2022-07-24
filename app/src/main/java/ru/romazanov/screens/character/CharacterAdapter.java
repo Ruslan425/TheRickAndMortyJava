@@ -16,7 +16,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     private ArrayList<Character> dataList = new ArrayList<>();
 
     public void setDataList(ArrayList<Character> list) {
-        dataList.addAll(list);
+        dataList = list;
     }
 
     @NonNull

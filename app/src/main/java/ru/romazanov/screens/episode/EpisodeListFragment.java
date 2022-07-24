@@ -35,13 +35,10 @@ public class EpisodeListFragment extends Fragment {
     @Inject
     ViewModelFactory viewModelFactory;
 
-    private EpisodeListViewModel viewModel;
-    private EpisodeAdapter adapter;
-    private LinearLayoutManager layoutManager;
     private FragmentEpisodeListBinding binding;
+    private EpisodeAdapter adapter;
     private LiveData<ArrayList<Episode>> dataList;
-
-    private Map<String, String> map;
+    private EpisodeListViewModel viewModel;
 
     public static EpisodeListFragment newInstance() {
         return new EpisodeListFragment();
@@ -50,8 +47,7 @@ public class EpisodeListFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((App) getActivity().getApplication()).appComponent.injectEpisodeListFragment(this);
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(EpisodeListViewModel.class);
+       ((App) getActivity().getApplication()).getAppComponent().injectEpisodeListFragment(this);
     }
 
 
@@ -59,21 +55,18 @@ public class EpisodeListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentEpisodeListBinding.inflate(inflater, container, false);
-
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(EpisodeListViewModel.class);
         dataList = viewModel.getDataList();
-        map = viewModel.map;
 
         initRecyclerView();
-
         getData();
-
 
         return binding.getRoot();
     }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = binding.recyclerView;
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new EpisodeAdapter();
         recyclerView.setAdapter(adapter);
@@ -83,13 +76,7 @@ public class EpisodeListFragment extends Fragment {
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                         super.onScrollStateChanged(recyclerView, newState);
                         if (!recyclerView.canScrollVertically(1)) {
-                            if (viewModel.getAnswer().info.next != null) {
-                                String page = "";
-                                page = viewModel.getAnswer().info.next.split("=")[1];
-                                map.clear();
-                                map.put("page", page);
-                                viewModel.makeCall(map);
-                            }
+                           viewModel.nextPage();
                         }
                     }
 

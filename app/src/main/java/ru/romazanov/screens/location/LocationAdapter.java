@@ -17,7 +17,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     private ArrayList<Location> dataList = new ArrayList<>();
 
     public void setDataList(ArrayList<Location> list) {
-        dataList.addAll(list);
+        dataList = list;
     }
 
     @NonNull
