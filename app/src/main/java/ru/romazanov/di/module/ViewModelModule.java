@@ -21,11 +21,13 @@ import ru.romazanov.data.Repository;
 import ru.romazanov.data.iteractors.CharacterInteractor;
 import ru.romazanov.data.iteractors.EpisodeInteractor;
 import ru.romazanov.data.iteractors.LocationInteractor;
+import ru.romazanov.data.iteractors.SearchInteractor;
 import ru.romazanov.data.retrofit.RetrofitApiInterface;
 import ru.romazanov.di.ViewModelFactory;
 import ru.romazanov.screens.character.CharacterListViewModel;
 import ru.romazanov.screens.episode.EpisodeListViewModel;
 import ru.romazanov.screens.location.LocationListViewModel;
+import ru.romazanov.screens.log.SearchViewModel;
 import ru.romazanov.therickandmortyjava.MainActivityViewModel;
 
 
@@ -71,6 +73,15 @@ public class ViewModelModule {
     @ViewModelKey(MainActivityViewModel.class)
     public ViewModel provideMainActivityViewModel(Repository repository) {
         return new MainActivityViewModel(repository);
+    }
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(SearchViewModel.class)
+    public ViewModel provideSearchViewModel(
+            SearchInteractor interactor
+    ) {
+        return new SearchViewModel(interactor);
     }
 
 }

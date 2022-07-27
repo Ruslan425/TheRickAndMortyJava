@@ -10,6 +10,7 @@ import ru.romazanov.di.module.ViewModelModule;
 import ru.romazanov.screens.character.CharacterListFragment;
 import ru.romazanov.screens.episode.EpisodeListFragment;
 import ru.romazanov.screens.location.LocationListFragment;
+import ru.romazanov.screens.log.SearchFragment;
 import ru.romazanov.therickandmortyjava.MainActivity;
 
 
@@ -29,5 +30,7 @@ public interface AppComponent {
     void injectEpisodeListFragment(EpisodeListFragment episodeListFragment);
 
     void injectLocationListFragment(LocationListFragment locationListFragment);
+
+    void injectSearchFragment(SearchFragment searchFragment);
 
 }

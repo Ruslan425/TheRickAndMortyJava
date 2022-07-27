@@ -11,7 +11,9 @@ import ru.romazanov.data.Repository;
 import ru.romazanov.data.iteractors.CharacterInteractor;
 import ru.romazanov.data.iteractors.EpisodeInteractor;
 import ru.romazanov.data.iteractors.LocationInteractor;
+import ru.romazanov.data.iteractors.SearchInteractor;
 import ru.romazanov.data.retrofit.RetrofitApiInterface;
+import ru.romazanov.data.retrofit.utils.ConverterToSearchItem;
 import ru.romazanov.data.room.DataBase;
 import ru.romazanov.data.room.utils.EntityConverter;
 
@@ -33,20 +35,24 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public Repository provideRepository(DataBase db, RetrofitApiInterface retrofit){
+    public Repository provideRepository(DataBase db, RetrofitApiInterface retrofit) {
         return new Repository(db, retrofit);
     }
 
 
     @Provides
     @Singleton
-    public CharacterInteractor provideCharacterInteractor(Repository repository, EntityConverter converter){
+    public CharacterInteractor provideCharacterInteractor(
+            Repository repository,
+            EntityConverter converter) {
         return new CharacterInteractor(repository, converter);
     }
 
     @Provides
     @Singleton
-    public EpisodeInteractor provideEpisodeInteractor(Repository repository, EntityConverter converter){
+    public EpisodeInteractor provideEpisodeInteractor(
+            Repository repository,
+            EntityConverter converter) {
         return new EpisodeInteractor(repository, converter);
     }
 
@@ -55,14 +61,28 @@ public class AppModule {
     public LocationInteractor provideLocationInteractor(
             Repository repository,
             EntityConverter converter
-    ){
+    ) {
         return new LocationInteractor(repository, converter);
+    }
+    @Provides
+    @Singleton
+    public SearchInteractor provideSearchInteractor(
+            Repository repository,
+            ConverterToSearchItem converter
+    ) {
+        return new SearchInteractor(repository, converter);
     }
 
     @Provides
     @Singleton
-    public EntityConverter provideConverter(){
+    public EntityConverter provideConverter() {
         return new EntityConverter();
+    }
+
+    @Provides
+    @Singleton
+    public ConverterToSearchItem provideSearchItemConverter() {
+        return new ConverterToSearchItem();
     }
 
 }

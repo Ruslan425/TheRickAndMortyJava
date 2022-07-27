@@ -31,12 +31,11 @@ public class LocationInteractor {
 
     private final MutableLiveData<ArrayList<Location>> locations = new MutableLiveData<>(new ArrayList<>());
 
-    private final EntityConverter converter;
-
-
     public LiveData<ArrayList<Location>> getLocation() {
         return locations;
     }
+
+    private final EntityConverter converter;
 
     @Inject
     public LocationInteractor(
