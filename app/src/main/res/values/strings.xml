@@ -12,4 +12,7 @@
     <string name="log">LOG</string>
     <string name="response">Response</string>
     <string name="request">Request</string>
+    <string name="search">Поиск</string>
+    <string name="textview">TextView</string>
+    <string name="section">Раздел:</string>
 </resources>

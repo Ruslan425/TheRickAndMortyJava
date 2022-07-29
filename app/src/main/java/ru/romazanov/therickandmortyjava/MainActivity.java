@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import ru.romazanov.di.ViewModelFactory;
 import ru.romazanov.screens.character.CharacterListFragment;
 import ru.romazanov.screens.episode.EpisodeListFragment;
 import ru.romazanov.screens.location.LocationListFragment;
+import ru.romazanov.screens.log.SearchFragment;
 import ru.romazanov.therickandmortyjava.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.location:
                         getSupportFragmentManager().beginTransaction().replace(binding.fragmentContainer.getId(), LocationListFragment.newInstance()).commit();
+                        return true;
+                    case R.id.search:
+                        getSupportFragmentManager().beginTransaction().replace(binding.fragmentContainer.getId(), SearchFragment.newInstance()).commit();
                         return true;
                 }
                 return false;

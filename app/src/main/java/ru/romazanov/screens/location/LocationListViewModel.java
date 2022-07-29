@@ -1,5 +1,7 @@
 package ru.romazanov.screens.location;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 

@@ -32,10 +32,10 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         holder.binding.idView.setText(String.valueOf(dataList.get(position).id));
         holder.binding.nameView.setText(dataList.get(position).name);
         holder.binding.specialView.setText(dataList.get(position).species);
-        Glide.with(holder.binding.imageView)
+        Glide.with(holder.binding.image)
                 .load(dataList.get(position).image)
                 .apply(RequestOptions.centerCropTransform())
-                .into(holder.binding.imageView);
+                .into(holder.binding.image);
     }
 
     @Override
